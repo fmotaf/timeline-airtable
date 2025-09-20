@@ -14,26 +14,26 @@ const Timeline = ({ items: initialItems }) => {
     const [zoomLevel, setZoomLevel] = useState(ZOOM_CONSTANTS.DEFAULT_ZOOM);
     const [editingItemId, setEditingItemId] = useState(null);
     const [editingValue, setEditingValue] = useState('');
-    
+
     const { minDate, maxDate, totalDays } = calculateDateRange(items);
 
     const lanes = assignLanes(items);
 
     const markers = generateTimelineMarkers(minDate, maxDate, totalDays, zoomLevel);
-    
+
     // Zoom functions
     const handleZoomIn = () => {
         setZoomLevel(prev => Math.min(prev + ZOOM_CONSTANTS.ZOOM_STEP, ZOOM_CONSTANTS.MAX_ZOOM));
     };
-    
+
     const handleZoomOut = () => {
         setZoomLevel(prev => Math.max(prev - ZOOM_CONSTANTS.ZOOM_STEP, ZOOM_CONSTANTS.MIN_ZOOM));
     };
-    
+
     const handleZoomReset = () => {
         setZoomLevel(ZOOM_CONSTANTS.DEFAULT_ZOOM);
     };
-    
+
     // Editing functions
     const startEditing = (item) => {
         setEditingItemId(item.id);
@@ -42,8 +42,8 @@ const Timeline = ({ items: initialItems }) => {
 
     const saveEdit = () => {
         if (editingValue.trim()) {
-            setItems(items.map(item => 
-                item.id === editingItemId 
+            setItems(items.map(item =>
+                item.id === editingItemId
                     ? { ...item, name: editingValue.trim() }
                     : item
             ));
@@ -70,7 +70,7 @@ const Timeline = ({ items: initialItems }) => {
         const handleGlobalKeyDown = (event) => {
             // Only handle zoom shortcuts if not editing
             if (editingItemId) return;
-            
+
             if (event.ctrlKey || event.metaKey) {
                 if (event.key === '=' || event.key === '+') {
                     event.preventDefault();
@@ -84,7 +84,7 @@ const Timeline = ({ items: initialItems }) => {
                 }
             }
         };
-        
+
         window.addEventListener('keydown', handleGlobalKeyDown);
         return () => window.removeEventListener('keydown', handleGlobalKeyDown);
     }, [editingItemId]);
@@ -94,7 +94,7 @@ const Timeline = ({ items: initialItems }) => {
             <div className="timeline-header">
                 <div className="timeline-header-left">
                     <h2>Project Timeline</h2>
-                                        <div className="timeline-info">
+                    <div className="timeline-info">
                         {items.length} items • {lanes.length} lanes • {formatDate(minDate)} to {formatDate(maxDate)}
                         <span className="timeline-shortcuts" title="Editing: Double-click items to edit names, or hover and click the edit icon">
                             • Double-click to edit item names
@@ -103,8 +103,8 @@ const Timeline = ({ items: initialItems }) => {
                 </div>
                 <div className="timeline-header-right">
                     <div className="timeline-zoom-controls">
-                        <button 
-                            className="zoom-btn zoom-btn--out" 
+                        <button
+                            className="zoom-btn zoom-btn--out"
                             onClick={handleZoomOut}
                             disabled={zoomLevel <= ZOOM_CONSTANTS.MIN_ZOOM}
                             title="Zoom Out"
@@ -114,16 +114,16 @@ const Timeline = ({ items: initialItems }) => {
                         <span className="zoom-level">
                             {Math.round(zoomLevel * 100)}%
                         </span>
-                        <button 
-                            className="zoom-btn zoom-btn--in" 
+                        <button
+                            className="zoom-btn zoom-btn--in"
                             onClick={handleZoomIn}
                             disabled={zoomLevel >= ZOOM_CONSTANTS.MAX_ZOOM}
                             title="Zoom In"
                         >
                             +
                         </button>
-                        <button 
-                            className="zoom-btn zoom-btn--reset" 
+                        <button
+                            className="zoom-btn zoom-btn--reset"
                             onClick={handleZoomReset}
                             title="Reset Zoom"
                         >
@@ -145,7 +145,7 @@ const Timeline = ({ items: initialItems }) => {
                             >
                                 <div className="timeline-marker-line"></div>
                                 <div className="timeline-marker-label">
-                                    {marker.isMinor ? 
+                                    {marker.isMinor ?
                                         marker.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) :
                                         formatDate(marker.date)
                                     }
@@ -196,8 +196,8 @@ const Timeline = ({ items: initialItems }) => {
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <div 
-                                                                className="timeline-item-name" 
+                                                            <div
+                                                                className="timeline-item-name"
                                                                 title={`${item.name} (double-click to edit)`}
                                                                 onDoubleClick={() => startEditing(item)}
                                                             >
