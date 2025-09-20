@@ -44,18 +44,25 @@ const Timeline = ({ items }) => {
                         <div key={laneIndex} className="timeline-lane">
                             {lane.map((item) => {
                                 const styles = calculateItemStyles(item, minDate, totalDays);
+                                const isShortItem = parseFloat(styles.width) < 15;
+                                const isLongItem = parseFloat(styles.width) > 25;
+
                                 return (
                                     <div
                                         key={item.id}
-                                        className="timeline-item"
+                                        className={`timeline-item ${isShortItem ? 'timeline-item--short' : ''} ${isLongItem ? 'timeline-item--long' : ''}`}
                                         style={styles}
-                                        title={`${item.name}\n${item.start} to ${item.end}`}
+                                        title={`${item.name}\nDuration: ${item.start} → ${item.end}`}
                                     >
                                         <div className="timeline-item-content">
-                                            <span className="timeline-item-name">{item.name}</span>
-                                            <span className="timeline-item-dates">
-                                                {item.start} → {item.end}
-                                            </span>
+                                            <div className="timeline-item-name" title={item.name}>
+                                                {item.name}
+                                            </div>
+                                            {!isShortItem && (
+                                                <div className="timeline-item-dates">
+                                                    {item.start} → {item.end}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 );

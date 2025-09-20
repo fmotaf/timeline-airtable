@@ -13,12 +13,12 @@ export const TIME_CONSTANTS = {
 
 // Timeline display constants
 export const TIMELINE_CONSTANTS = {
-    MINIMUM_ITEM_WIDTH_PERCENT: 1.5,
-    LANE_HEIGHT: 60,
-    LANE_MARGIN_BOTTOM: 12,
-    ITEM_HEIGHT: 44,
-    ITEM_TOP_OFFSET: 8,
-    AXIS_HEIGHT: 60,
+    MINIMUM_ITEM_WIDTH_PERCENT: 8,
+    LANE_HEIGHT: 80,
+    LANE_MARGIN_BOTTOM: 16,
+    ITEM_HEIGHT: 60,
+    ITEM_TOP_OFFSET: 10,
+    AXIS_HEIGHT: 70,
 };
 
 // Date formatting constants
@@ -52,4 +52,20 @@ export const ANIMATION_CONSTANTS = {
     HOVER_TRANSITION_DURATION: '0.2s',
     SCROLL_BEHAVIOR: 'smooth',
     ITEM_HOVER_TRANSFORM: 'translateY(-2px)'
+};
+
+// Color constants for better contrast and accessibility
+export const COLOR_CONSTANTS = {
+    TIMELINE_ITEM_GRADIENTS: [
+        'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)',
+        'linear-gradient(135deg, #E91E63 0%, #C2185B 100%)',
+        'linear-gradient(135deg, #00BCD4 0%, #0097A7 100%)',
+        'linear-gradient(135deg, #FF9800 0%, #F57C00 100%)',
+        'linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%)',
+        'linear-gradient(135deg, #4CAF50 0%, #388E3C 100%)',
+        'linear-gradient(135deg, #795548 0%, #5D4037 100%)',
+        'linear-gradient(135deg, #607D8B 0%, #455A64 100%)'
+    ],
+    TEXT_SHADOW: '0 2px 4px rgba(0, 0, 0, 0.5)',
+    CONTENT_SHADOW: '0 2px 4px rgba(0, 0, 0, 0.4)'
 };
