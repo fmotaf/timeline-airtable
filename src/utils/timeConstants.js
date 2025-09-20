@@ -14,7 +14,7 @@ export const TIMELINE_CONSTANTS = {
     MINIMUM_ITEM_WIDTH_PERCENT: 8,
     LANE_HEIGHT: 80,
     LANE_MARGIN_BOTTOM: 16,
-    ITEM_HEIGHT: 60,
+    ITEM_HEIGHT: 75, // Increased to accommodate wrapped text
     ITEM_TOP_OFFSET: 10,
     AXIS_HEIGHT: 70,
 };

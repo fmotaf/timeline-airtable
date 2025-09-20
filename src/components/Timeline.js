@@ -124,9 +124,9 @@ const Timeline = ({ items }) => {
                                 {lane.map((item) => {
                                     const styles = calculateItemStyles(item, minDate, totalDays, zoomLevel);
                                     const actualWidth = parseFloat(styles.width) * zoomLevel; // Calculate actual pixel width percentage
-                                    const isShortItem = actualWidth < 8; // Items less than 8% actual width are short
+                                    const isShortItem = actualWidth < 6; // Items less than 6% actual width are short
                                     const isLongItem = actualWidth > 20; // Items more than 20% actual width are long
-                                    const showText = actualWidth > 3; // Only show text if item is wide enough
+                                    const showText = actualWidth > 2; // Show text for items wider than 2%
 
                                     return (
                                         <div
