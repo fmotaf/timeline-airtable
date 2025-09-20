@@ -19,9 +19,10 @@ export const calculateDateRange = (items) => {
  * @param {Object} item - Timeline item with start and end dates
  * @param {Date} minDate - Minimum date in the timeline
  * @param {number} totalDays - Total duration of the timeline in days
+ * @param {number} zoomLevel - Current zoom level (default 1)
  * @returns {Object} CSS styles object with left and width properties
  */
-export const calculateItemStyles = (item, minDate, totalDays) => {
+export const calculateItemStyles = (item, minDate, totalDays, zoomLevel = 1) => {
     const startDate = new Date(item.start);
     const endDate = new Date(item.end);
 
@@ -29,7 +30,7 @@ export const calculateItemStyles = (item, minDate, totalDays) => {
     const left = (daysFromStart / totalDays) * 100;
 
     const itemDurationDays = Math.ceil((endDate - startDate) / TIME_CONSTANTS.MILLISECONDS_PER_DAY) + 1;
-    const width = Math.max((itemDurationDays / totalDays) * 100, TIMELINE_CONSTANTS.MINIMUM_ITEM_WIDTH_PERCENT);
+    const width = Math.max((itemDurationDays / totalDays) * 100, TIMELINE_CONSTANTS.MINIMUM_ITEM_WIDTH_PERCENT / zoomLevel);
 
     return { left: `${left}%`, width: `${width}%` };
 };
@@ -48,12 +49,32 @@ export const formatDate = (date) => {
  * @param {Date} minDate - Minimum date in the timeline
  * @param {Date} maxDate - Maximum date in the timeline
  * @param {number} totalDays - Total duration of the timeline in days
+ * @param {number} zoomLevel - Current zoom level (default 1)
  * @returns {Array} Array of marker data objects
  */
-export const generateTimelineMarkers = (minDate, maxDate, totalDays) => {
+export const generateTimelineMarkers = (minDate, maxDate, totalDays, zoomLevel = 1) => {
     const markers = [];
 
+    let intervalType = 'month';
+    let intervalValue = 1;
+
+    if (zoomLevel >= 2) {
+        intervalType = 'week';
+        intervalValue = 1;
+    } else if (zoomLevel >= 3) {
+        intervalType = 'day';
+        intervalValue = 7;
+    }
+
     const currentDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+
+    if (intervalType !== 'month') {
+        currentDate.setTime(minDate.getTime());
+        if (intervalType === 'week') {
+            const dayOfWeek = currentDate.getDay();
+            currentDate.setDate(currentDate.getDate() - dayOfWeek);
+        }
+    }
 
     while (currentDate <= maxDate) {
         const daysFromStart = Math.ceil((currentDate - minDate) / TIME_CONSTANTS.MILLISECONDS_PER_DAY);
@@ -63,10 +84,18 @@ export const generateTimelineMarkers = (minDate, maxDate, totalDays) => {
             markers.push({
                 date: new Date(currentDate),
                 position,
-                key: currentDate.toISOString()
+                key: currentDate.toISOString(),
+                isMinor: intervalType !== 'month'
             });
         }
-        currentDate.setMonth(currentDate.getMonth() + 1);
+
+        if (intervalType === 'month') {
+            currentDate.setMonth(currentDate.getMonth() + intervalValue);
+        } else if (intervalType === 'week') {
+            currentDate.setDate(currentDate.getDate() + 7);
+        } else if (intervalType === 'day') {
+            currentDate.setDate(currentDate.getDate() + intervalValue);
+        }
     }
 
     return markers;

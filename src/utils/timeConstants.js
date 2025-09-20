@@ -2,7 +2,6 @@
 * Time constants used throughout the timeline application
 */
 
-// Time conversion constants
 export const TIME_CONSTANTS = {
     MILLISECONDS_PER_SECOND: 1000,
     SECONDS_PER_MINUTE: 60,
@@ -11,7 +10,6 @@ export const TIME_CONSTANTS = {
     MILLISECONDS_PER_DAY: 1000 * 60 * 60 * 24,
 };
 
-// Timeline display constants
 export const TIMELINE_CONSTANTS = {
     MINIMUM_ITEM_WIDTH_PERCENT: 8,
     LANE_HEIGHT: 80,
@@ -21,7 +19,6 @@ export const TIMELINE_CONSTANTS = {
     AXIS_HEIGHT: 70,
 };
 
-// Date formatting constants
 export const DATE_FORMAT_OPTIONS = {
     MONTH_SHORT: {
         month: 'short',
@@ -52,6 +49,13 @@ export const ANIMATION_CONSTANTS = {
     HOVER_TRANSITION_DURATION: '0.2s',
     SCROLL_BEHAVIOR: 'smooth',
     ITEM_HOVER_TRANSFORM: 'translateY(-2px)'
+};
+
+export const ZOOM_CONSTANTS = {
+    MIN_ZOOM: 0.5,
+    MAX_ZOOM: 4,
+    ZOOM_STEP: 0.25,
+    DEFAULT_ZOOM: 1
 };
 
 // Color constants for better contrast and accessibility

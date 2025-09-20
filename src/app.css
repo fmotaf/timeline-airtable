@@ -49,6 +49,18 @@ body {
   border-bottom: 1px solid var(--timeline-border-color);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-header-left {
+  flex: 1;
+}
+
+.timeline-header-right {
+  display: flex;
+  align-items: center;
 }
 
 .timeline-header h2 {
@@ -63,12 +75,79 @@ body {
   font-weight: 400;
 }
 
+.timeline-shortcuts {
+  opacity: 0.7;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+.timeline-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.zoom-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.zoom-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.zoom-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.zoom-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.zoom-btn--reset {
+  font-size: 14px;
+}
+
+.zoom-level {
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 45px;
+  text-align: center;
+}
+
 .timeline-wrapper {
   position: relative;
   padding: 0;
   overflow-x: auto;
   min-height: 500px;
   background: white;
+  transition: transform 0.3s ease;
+}
+
+.timeline-content {
+  position: relative;
+  min-width: 100%;
+  transition: width 0.3s ease;
+  height: 100%;
 }
 
 .timeline-axis {
@@ -77,6 +156,7 @@ body {
   background: var(--timeline-bg-color);
   border-bottom: 2px solid #dee2e6;
   padding: 0 20px;
+  width: 100%;
 }
 
 .timeline-marker {
@@ -102,9 +182,21 @@ body {
   white-space: nowrap;
 }
 
+.timeline-marker--minor .timeline-marker-line {
+  height: 50%;
+  background: rgba(173, 181, 189, 0.5);
+}
+
+.timeline-marker--minor .timeline-marker-label {
+  font-size: 10px;
+  opacity: 0.7;
+  top: 35px;
+}
+
 .timeline-lanes {
   padding: 20px 24px 24px 24px;
   min-height: 400px;
+  width: 100%;
 }
 
 .timeline-lane {
@@ -134,7 +226,7 @@ body {
   cursor: pointer;
   transition: all var(--timeline-hover-transition);
   overflow: hidden;
-  min-width: 24px;
+  min-width: 2px;
 }
 
 .timeline-item:hover {
@@ -218,6 +310,14 @@ body {
   padding-top: 10px;
 }
 
+.timeline-item--no-text {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.timeline-item--no-text:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
 .timeline-item-dates {
   font-size: 12px;
   opacity: 1;
@@ -237,6 +337,29 @@ body {
 
   .timeline-header {
     padding: 16px 20px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .timeline-header-right {
+    align-self: flex-end;
+  }
+
+  .timeline-zoom-controls {
+    gap: 6px;
+    padding: 4px;
+  }
+
+  .zoom-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .zoom-level {
+    font-size: 12px;
+    min-width: 40px;
   }
 
   .timeline-header h2 {
