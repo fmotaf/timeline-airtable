@@ -16,6 +16,28 @@ npm start
 
 The application will open in your browser at `http://localhost:1234` and render the sample timeline data.
 
+## 📸 Visual Demo
+
+### Main Timeline View
+When you run the project, you should see a clean, organized timeline interface like this:
+
+![Timeline Main View](./demo-timeline-main.png)
+
+*The main timeline displays all project items arranged in horizontal lanes with intelligent space optimization. Notice the zoom controls (74%, +, ⌂) in the top-right corner and the timeline markers showing months across the top.*
+
+### Inline Editing Mode
+When you double-click any timeline item or hover and click the edit icon, you'll enter editing mode:
+
+![Timeline Edit Mode](./demo-timeline-edit.png)
+
+*In edit mode, the item shows an input field with save (✓) and cancel (✕) buttons. You can save changes by pressing Enter or clicking the checkmark, or cancel by pressing Escape or clicking the X.*
+
+### Key Visual Features
+- **Color-coded Items**: Different colors help distinguish between various project phases
+- **Smart Text Display**: Item names are shown when there's enough space, with date ranges for longer items
+- **Responsive Layout**: The timeline adapts to different zoom levels and screen sizes
+- **Interactive Controls**: Hover effects and clear visual feedback for all interactive elements
+
 ## ✅ Implemented Features
 
 ### Core Requirements Met
