@@ -1,20 +1,17 @@
 import React from 'react';
-import assignLanes from '../utils/assignLanes.js';
 import {
+    assignLanes,
     calculateDateRange,
     calculateItemStyles,
     formatDate,
     generateTimelineMarkers
-} from '../utils/timelineHelpers.js';
+} from '../utils/index.js';
 
 const Timeline = ({ items }) => {
-    // Calculate date range
     const { minDate, maxDate, totalDays } = calculateDateRange(items);
 
-    // Assign items to lanes
     const lanes = assignLanes(items);
 
-    // Generate timeline axis markers
     const markers = generateTimelineMarkers(minDate, maxDate, totalDays);
 
     return (
@@ -27,7 +24,6 @@ const Timeline = ({ items }) => {
             </div>
 
             <div className="timeline-wrapper">
-                {/* Timeline axis */}
                 <div className="timeline-axis">
                     {markers.map((marker) => (
                         <div
@@ -43,7 +39,6 @@ const Timeline = ({ items }) => {
                     ))}
                 </div>
 
-                {/* Timeline lanes */}
                 <div className="timeline-lanes">
                     {lanes.map((lane, laneIndex) => (
                         <div key={laneIndex} className="timeline-lane">

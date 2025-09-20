@@ -1,3 +1,5 @@
+import { TIME_CONSTANTS, TIMELINE_CONSTANTS, DATE_FORMAT_OPTIONS } from './timeConstants.js';
+
 /**
  * Calculate the date range for a timeline
  * @param {Array} items - Array of timeline items with start and end dates
@@ -7,7 +9,7 @@ export const calculateDateRange = (items) => {
     const dates = items.flatMap(item => [new Date(item.start), new Date(item.end)]);
     const minDate = new Date(Math.min(...dates));
     const maxDate = new Date(Math.max(...dates));
-    const totalDays = Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24)) + 1;
+    const totalDays = Math.ceil((maxDate - minDate) / TIME_CONSTANTS.MILLISECONDS_PER_DAY) + 1;
 
     return { minDate, maxDate, totalDays };
 };
@@ -23,11 +25,11 @@ export const calculateItemStyles = (item, minDate, totalDays) => {
     const startDate = new Date(item.start);
     const endDate = new Date(item.end);
 
-    const daysFromStart = Math.ceil((startDate - minDate) / (1000 * 60 * 60 * 24));
+    const daysFromStart = Math.ceil((startDate - minDate) / TIME_CONSTANTS.MILLISECONDS_PER_DAY);
     const left = (daysFromStart / totalDays) * 100;
 
-    const itemDurationDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-    const width = Math.max((itemDurationDays / totalDays) * 100, 1.5); // Minimum 1.5% width for visibility
+    const itemDurationDays = Math.ceil((endDate - startDate) / TIME_CONSTANTS.MILLISECONDS_PER_DAY) + 1;
+    const width = Math.max((itemDurationDays / totalDays) * 100, TIMELINE_CONSTANTS.MINIMUM_ITEM_WIDTH_PERCENT);
 
     return { left: `${left}%`, width: `${width}%` };
 };
@@ -38,11 +40,7 @@ export const calculateItemStyles = (item, minDate, totalDays) => {
  * @returns {string} Formatted date string
  */
 export const formatDate = (date) => {
-    return date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-    });
+    return date.toLocaleDateString('en-US', DATE_FORMAT_OPTIONS.MONTH_SHORT);
 };
 
 /**
@@ -58,7 +56,7 @@ export const generateTimelineMarkers = (minDate, maxDate, totalDays) => {
     const currentDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
 
     while (currentDate <= maxDate) {
-        const daysFromStart = Math.ceil((currentDate - minDate) / (1000 * 60 * 60 * 24));
+        const daysFromStart = Math.ceil((currentDate - minDate) / TIME_CONSTANTS.MILLISECONDS_PER_DAY);
         const position = Math.max(0, (daysFromStart / totalDays) * 100);
 
         if (position <= 100) {
